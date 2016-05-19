@@ -141,6 +141,9 @@ class SettingsController extends AdminController
             $setting->per_page = e(Input::get('per_page'));
             $setting->qr_code = e(Input::get('qr_code', '0'));
             $setting->barcode_type = e(Input::get('barcode_type'));
+	    $setting->zpl_printer = e(Input::get('zpl_printer'));
+	    $setting->zpl_template = e(Input::get('zpl_template'));
+	    $setting->print_on_asset_create = e(Input::get('print_on_asset_create'));
             $setting->load_remote = e(Input::get('load_remote', '0'));
             $setting->default_currency = Input::get('default_currency', '$');
             $setting->qr_text = e(Input::get('qr_text'));

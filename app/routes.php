@@ -199,6 +199,16 @@
                     'as'   => 'hardware/bulkedit',
                     'uses' => 'AssetsController@postBulkEdit'
                 ] );
+	    Route::post( 'bulkprintlabels',
+		[
+			'as'	=> 'hardware/bulkprintlabels',
+			'uses'	=> 'PrintLabelController@processLabelsFromBulkEdit'
+		] );
+	    Route::post( 'printlabel',
+		[
+			'as'	=> 'hardware/printlabel',
+			'uses'	=> 'PrintLabelController@printSingleLabel'
+		] );
             Route::post( 'bulkdelete',
                 [
                     'as'   => 'hardware/bulkdelete',

@@ -20,6 +20,8 @@ use Sentry;
 use Str;
 use Validator;
 use View;
+use Request;
+use Route;
 use Response;
 use Config;
 use Location;
@@ -218,6 +220,11 @@ class AssetsController extends AdminController
 					$logaction->note = e(Input::get('note'));
 					$log = $logaction->logaction('checkout');
 				}
+		$settings = Setting::getSettings();
+		if($settings->print_on_asset_create === '1') {
+			$request = Request::create('hardware/printlabel', 'POST');
+			return Route::dispatch($request)->getContent();
+		}
                 // Redirect to the asset listing page
                 return Redirect::to("hardware")->with('success', Lang::get('admin/hardware/message.create.success'));
             }
@@ -1122,21 +1129,11 @@ class AssetsController extends AdminController
 	    if (Input::has('bulk_actions')) {
 
 
-		    // Create labels
-		    if (Input::get('bulk_actions')=='labels') {
-          $settings = Setting::getSettings();
-          if ($settings->qr_code=='1') {
-
-            $assets = Asset::find($asset_ids);
-            $assetcount = count($assets);
-            $count = 0;
-
-            return View::make('backend/hardware/labels')->with('assets',$assets)->with('settings',$settings)->with('count',$count);
-
-          } else {
-            // QR codes are not enabled
-            return Redirect::to("hardware")->with('error','Barcodes are not enabled in Admin > Settings');
-          }
+		// Create labels
+		if (Input::get('bulk_actions')=='labels') {
+			// New label controller here
+			$request = Request::create('hardware/bulkprintlabels', 'POST');
+			return Route::dispatch($request)->getContent();
 
       } elseif (Input::get('bulk_actions')=='delete') {
 

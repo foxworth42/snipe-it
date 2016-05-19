@@ -232,6 +232,39 @@
                 </div>
               </div>
 
+	      <!-- ZPL Printer Settings -->
+	      <div class="form-group {{ $errors->has('zpl_printer') ? 'error' : '' }}">
+		<div class="col-md-3">
+		{{ Form::label('zpl_printer', Lang::get('admin/settings/general.zpl_printer')) }}
+		</div>
+		<div class="col-md-9">
+		 {{ Form::text('zpl_printer', Input::old('zpl_printer', $setting->zpl_printer), array('class' => 'form-control', 'placeholder' => 'Ex: 172.20.1.4:9100')) }}
+		</div>
+	      </div>
+
+		<!-- ZPL Print on asset create -->
+		<div class="form-group">
+		  <div class="col-md-3">
+		    {{ Form::label('print_on_asset_create', Lang::get('admin/settings/general.print_on_asset_create')) }}
+		  </div>
+		  <div class="col-md-9">
+		    {{ Form::checkbox('print_on_asset_create', '1', Input::old('print_on_asset_create', $setting->print_on_asset_create)) }}
+		    @lang('admin/settings/general.print_on_asset_create')
+		  </div>
+		</div>
+
+<!-- ZPL template -->
+<div class="form-group">
+  <div class="col-md-3">
+    {{ Form::label('zpl_template', Lang::get('admin/settings/general.zpl_template')) }}
+  </div>
+  <div class="col-md-9">
+	<p>^XA<br>^DFR:label.GRF^FS</p>
+    {{ Form::textarea('zpl_template', Input::old('custom_css', $setting->zpl_template), array('class' => 'form-control','placeholder' => '')) }}
+	<p>^XZ</p>
+  </div>
+</div>
+
             @else
               <span class="help-inline col-md-offset-3 col-md-12">
                 @lang('admin/settings/general.php_gd_warning')
